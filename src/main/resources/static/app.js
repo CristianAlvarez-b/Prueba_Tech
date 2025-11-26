@@ -32,7 +32,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             await loadTransactions();
             await renderMonthlyBalanceChart();
         } catch (err) {
-            alert(err.message);
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: err.message
+            });
+
         }
     });
     const showRegisterBtn = document.getElementById('show-register');
@@ -65,12 +70,20 @@ document.addEventListener('DOMContentLoaded', async () => {
                 body: JSON.stringify({ username, email, password })
             });
             if (!res.ok) throw new Error('Error al registrarse');
-            alert('Registro exitoso. Ahora inicia sesión.');
+            Swal.fire({
+              icon: 'success',
+              title: '¡Éxito!',
+              text: 'Registro exitoso. Ahora inicia sesión.'
+            });
             registerForm.reset();
             registerForm.style.display = 'none';
             loginForm.style.display = 'block';
         } catch (err) {
-            alert(err.message);
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: err.message
+            });
         }
     });
 
@@ -154,7 +167,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         const res = await fetch(`${API_URL}${query}`, {
             headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
         });
-        if (!res.ok) { alert('Error al cargar transacciones'); return; }
+        if (!res.ok) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Error al cargar transacciones'
+            });
+            return;
+        }
 
         const data = await res.json();
         transactions = data.content || [];
@@ -232,7 +252,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             },
             body: JSON.stringify(t)
         });
-        if (!res.ok) { alert('Error al guardar la transacción'); return; }
+        if (!res.ok) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Error al guardar la transaccion'
+            });
+            return;
+        }
 
         editId = null;
         form.reset();
@@ -252,12 +279,29 @@ document.addEventListener('DOMContentLoaded', async () => {
     cancelEditBtn.addEventListener('click', () => { editId = null; form.reset(); });
 
     window.deleteTransaction = async (id) => {
-        if (!confirm('¿Seguro que deseas eliminar esta transacción?')) return;
+        const result = await Swal.fire({
+          title: '¿Seguro que deseas eliminar esta transacción?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          cancelButtonColor: '#3085d6',
+          confirmButtonText: 'Sí, eliminar',
+          cancelButtonText: 'Cancelar'
+        });
+
+        if (!result.isConfirmed) return;
+
         const res = await fetch(`${API_URL}/${id}`, {
             method: 'DELETE',
             headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
         });
-        if (!res.ok) { alert('Error al eliminar'); return; }
+        if (!res.ok) throw new Error('Error al eliminar la transacción');
+
+        Swal.fire({
+            icon: 'success',
+            title: '¡Eliminado!',
+            text: 'La transacción ha sido eliminada.'
+        });
         const index = allTransactions.findIndex(t => t.id === id);
         if (index >= 0) allTransactions.splice(index, 1);
         await loadTransactions();
@@ -416,6 +460,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (localStorage.getItem('token')) {
         loginSection.style.display = 'none';
         dashboard.style.display = 'block';
+        mainHeader.classList.remove('hide-header');
         await loadAllTransactions();
         await loadTransactions();
     } else {
