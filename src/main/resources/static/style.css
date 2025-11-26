@@ -1,0 +1,505 @@
+/* ===== FUENTES ===== */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(120deg, #f0d2d7, #ffffff);
+    margin: 0;
+    padding: 0;
+}
+
+/* ===== HEADERS ===== */
+h1, h2 {
+    margin-bottom: 15px;
+}
+/* ===== HEADER ===== */
+#main-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  display: flex;
+  justify-content:space-between;
+  align-items: center;
+  background-color: #C8102E;
+  color: white;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  z-index: 1000;
+}
+
+#main-header h1 {
+    font-size: 20px;
+    margin-left: 15px;
+}
+
+#main-header #logo {
+    height: 80px;
+    width: auto;
+    padding-left: 50px;
+}
+
+#main-header button {
+    background-color: white;
+    color: #C8102E;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    padding-right: 20px;
+}
+/* Ocultar header cuando estamos en login */
+.hide-header {
+    display: none !important;
+}
+
+#main-header button:hover {
+    background-color: #f0f0f0;
+}
+
+/* ===== INPUTS AMIGABLES ===== */
+input[type="text"], input[type="number"], input[type="date"], select {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    transition: 0.3s;
+    width: 250px; /* No ocupa toda la pantalla */
+}
+
+input[type="text"]:focus, input[type="number"]:focus, input[type="date"]:focus, select:focus {
+    border-color: #C8102E;
+    box-shadow: 0 0 5px rgba(200,0,0,0.3);
+    outline: none;
+}
+
+.form-row-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+
+/* ===== LOGIN ===== */
+/* Contenedor principal del login */
+#login-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 0 50px;
+  background: linear-gradient(120deg, #e29ba7, #faefef);
+  gap: 50px;
+  overflow: hidden;
+}
+
+/* Card del login */
+/* Card del login como fila */
+#login-card {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 800px; /* más ancho para que quepa la imagen */
+  width: 100%;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+  display: flex;
+  flex-direction: row; /* ahora formulario a la izquierda y imagen a la derecha */
+  align-items: center;
+  justify-content: space-between;
+  opacity: 0;
+  transform: translateX(-50px);
+  animation: slideInLeft 1s forwards;
+  gap: 30px;
+}
+
+/* Contenedor del formulario */
+#login-card > div:first-child {
+  flex: 1; /* ocupa el espacio disponible */
+}
+
+/* Contenedor de la ilustración */
+#login-illustration {
+  flex: 1; /* ocupa la mitad derecha */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transform: translateX(50px);
+  animation: slideInRight 1s forwards 0.3s;
+}
+
+#login-illustration img {
+  max-width: 100%;
+  max-height: 300px;
+  border-radius: 15px;
+  object-fit: cover;
+}
+
+
+/* Título y párrafo */
+#login-card h1 {
+  color: #C8102E;
+  font-size: 26px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+#login-card p {
+  font-size: 14px;
+  margin-bottom: 30px;
+  color: #555;
+  text-align: center;
+}
+
+/* Formularios */
+#login-card form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+#login-card input, #login-card button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+#login-card input:focus {
+  border-color: #C8102E;
+  outline: none;
+  box-shadow: 0 0 8px rgba(200,0,0,0.3);
+}
+
+#login-card button {
+  background-color: #C8102E;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#login-card button:hover {
+  background-color: #a00b23;
+}
+
+/* Texto registro */
+#show-register {
+  background: none;
+  border: none;
+  color: #C8102E;
+  cursor: pointer;
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+/* Ilustración */
+#login-illustration {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transform: translateX(50px);
+  animation: slideInRight 1s forwards 0.3s;
+}
+
+#login-illustration img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Animaciones */
+@keyframes slideInLeft {
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Responsive */
+@media(max-width: 900px){
+  #login-section {
+    flex-direction: column;
+    padding: 50px 20px;
+  }
+  #login-illustration {
+    margin-top: 30px;
+  }
+}
+
+/* Texto registro */
+#show-register-p {
+    margin-top: 15px;
+}
+
+#show-register {
+    background-color: transparent;
+    border: none;
+    color: #C8102E;
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+#show-register:hover {
+    color: #a00b23;
+}
+
+/* Ajustes responsive */
+@media(max-width: 480px){
+    #login-card {
+        width: 90%;
+        padding: 30px 20px;
+    }
+}
+#show-register {
+    background-color: transparent;
+    border: none;
+    color: white;
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: 600;
+    margin-left: 5px;
+}
+
+#show-register:hover {
+    color: #a00b23;
+}
+#login-section h1 {
+    margin-bottom: 20px;
+    background: linear-gradient(120deg, #e29ba7, #faefef);
+
+}
+
+#login-section form {
+    background: rgba(255, 255, 255, 0.95);
+    align-items: center;
+    align-self: center;
+    padding: 30px;
+    border-radius: 10px;
+    width: 300px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    color: #333;
+}
+
+#login-section input, #login-section button {
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+#login-section input:focus {
+    border-color: #C8102E;
+    outline: none;
+}
+
+#login-section button {
+    background-color: #C8102E;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+#login-section button:hover {
+    background-color: #a00b23;
+}
+
+/* ===== DASHBOARD ===== */
+#dashboard {
+    padding: 20px 40px;
+    animation: fadeIn 1s ease-in;
+    padding-top: 100px; /* espacio para el header fijo */
+
+}
+
+/* ===== FORMULARIOS ===== */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.form-row label {
+    width: 120px;
+    font-weight: 600;
+}
+
+form input, form select, form button {
+    flex: 1;
+}
+
+/* Botones */
+button {
+    background-color: #C8102E;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #a00b23;
+}
+
+/* Cancel buttons */
+#cancel-edit, #reset-filters {
+    background-color: #999;
+}
+
+#cancel-edit:hover, #reset-filters:hover {
+    background-color: #777;
+}
+
+/* ===== TABLA ===== */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+thead {
+    background-color: #C8102E;
+    color: white;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+tr:hover {
+    background-color: rgba(200, 200, 200, 0.2);
+}
+
+#pagination-controls {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* ===== CHARTS ===== */
+#charts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.chart-container {
+    flex: 1 1 300px;
+    min-width: 300px;
+    height: 300px;
+    padding: 15px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+/* ===== ANALYTICS PANEL ===== */
+#analytics-panel {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #fff0f1;
+    border-left: 5px solid #C8102E;
+    border-radius: 10px;
+}
+
+#analytics-panel p {
+    margin: 8px 0;
+    font-weight: 500;
+}
+.indicator-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 15px;
+}
+
+.indicator-card {
+    flex: 1 1 200px;
+    background-color: white;
+    padding: 15px 20px;
+    border-radius: 10px;
+    border-left: 5px solid #C8102E;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+.indicator-card:hover {
+    transform: translateY(-5px);
+}
+
+.indicator-title {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.indicator-value {
+    font-size: 20px;
+    font-weight: 700;
+    color: #C8102E;
+}
+
+
+/* ===== FOOTER ===== */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #C8102E;
+    color: white;
+    margin-top: 30px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+/* ===== ANIMACIONES ===== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width: 768px){
+    .form-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #charts {
+        flex-direction: column;
+    }
+
+    #dashboard {
+        padding: 20px;
+    }
+}

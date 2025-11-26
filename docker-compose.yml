@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+
+  mysqldb:
+    image: mysql:8.0.39
+    container_name: finanzas-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: finanzas_db
+    ports:
+      - "3307:3306"  # Host:Container
+    volumes:
+      - mysql-data:/var/lib/mysql          # Persistencia de datos
+    networks:
+      - springboot-mysql-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      retries: 10
+      interval: 3s
+      timeout: 30s
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: finanzas-phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: mysqldb
+      PMA_USER: root
+      PMA_PASSWORD: root
+    ports:
+      - "8081:80"
+    networks:
+      - springboot-mysql-network
+
+  springboot-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: finanzas-backend
+    restart: always
+    ports:
+      - "18080:8080"
+    depends_on:
+      mysqldb:
+        condition: service_healthy
+    networks:
+      - springboot-mysql-network
+    volumes:
+      - ./src/main/resources/application.properties:/app/application.properties
+      - ./src/main/resources/static:/app/static  # Frontend static
+
+volumes:
+  mysql-data:
+
+networks:
+  springboot-mysql-network:
+    name: springboot-mysql-network
